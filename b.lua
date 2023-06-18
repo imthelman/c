@@ -536,6 +536,11 @@ local function reanimate()
 		end
 	end
 
+	local function speed_power(ws, jp)
+		walkSpeed = ws
+		jumpPower = jp
+	end
+
 	if R15toR6 then
 		local R6parts={ 
 			head={Name="Head",Anchored=true},
@@ -1174,7 +1179,8 @@ local function reanimate()
 		velchgbycfrvec=velchgbycfrvec,
 		addmode=addmode,
 		getJoint=getJoint,
-        getAccessoryWeld=getAccessoryWeld
+                getAccessoryWeld=getAccessoryWeld,
+		speed_power=speed_power
 	}
 end
 
@@ -1187,6 +1193,7 @@ local velchgbycfrvec=t.velchgbycfrvec
 local addmode=t.addmode
 local getJoint=t.getJoint
 local getAccessoryWeld=t.getAccessoryWeld
+local sp=t.speed_power
 local RootJoint=getJoint("RootJoint")
 local RightShoulder=getJoint("Right Shoulder")
 local LeftShoulder=getJoint("Left Shoulder")
@@ -1495,51 +1502,67 @@ while true do
 	if modee == "Happy" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(16,50)
 	elseif modee == "Demise" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 25
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 75
+		sp(25,75)
 	elseif modee == "Divine" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 5.5
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 55
+		sp(5.5,55)
 	elseif modee == "Glitched" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 12
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(12,50)
 	elseif modee == "Chaos" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(16,50)
 	elseif modee == "Depressed" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 10
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+	        sp(10,50)
 	elseif modee == "Hatred" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 30
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 60
+		sp(30,60)
 	elseif modee == "Eternal" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 45
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(45,50)
 	elseif modee == "Nova" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 30
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(30,50)
 	elseif modee == "You Will DIE"then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 75
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(75,50)
 	elseif modee == "The End" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 8
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(8,50)
 	elseif modee == "THE GREAT ONE" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(16,50)
 	elseif modee == "UNEXPECTED ERROR" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(16,50)
 	elseif modee == "l o s t  i n t r e s t" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(16,50)
 	elseif modee == "ANGER" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 30
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(30,50)
 	elseif modee == "SUPERNOVA" then
 		game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 65
 		game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
+		sp(65,50)
 	end
 	i6.Text=modee
 	twait()
