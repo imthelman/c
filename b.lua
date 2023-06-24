@@ -1,3 +1,39 @@
+local tools1 = game:GetService("Players").LocalPlayer.Character:GetChildren()
+local tools2 = game:GetService("Players").LocalPlayer.Backpack:GetChildren()
+local firsttoolinbackpack = nil
+local toolinhand = false
+
+for i,v in pairs(tools1) do
+	if v:IsA("Tool") then
+		toolinhand = true
+		firsttoolinbackpack = v
+	end
+end
+
+if toolinhand == false then
+	for i,v in pairs(tools2) do
+		if v:IsA("Tool") then
+			if not firsttoolinbackpack then
+				firsttoolinbackpack = v
+			end
+			if v.Name == "BoomBox" or v.Name == "Boombox" then
+				firsttoolinbackpack = v
+			end
+		end
+	end
+	if firsttoolinbackpack then
+		firsttoolinbackpack.Parent = game:GetService("Players").LocalPlayer.Character
+	end
+end
+
+task.wait(1)
+
+if firsttoolinbackpack then
+	if firsttoolinbackpack.Name == "Boombox" and firsttoolinbackpack.Client then
+		firsttoolinbackpack.Client.Disabled = true
+	end
+end
+
 local modekey = "default"
 local modee = "Happy"
 
@@ -1363,12 +1399,12 @@ addmode("r", {
         local Cfw, Crt = velchgbycfrvec()
 
         
-        RightHip.C0=RightHip.C0:Lerp(cf(1,-1,0)*angles(0,1.5707963267948966,-0.17453292519943295-0.6108652381980153*sin((sine+1)*5)),deltaTime) 
+        RightHip.C0=RightHip.C0:Lerp(cf(1,-1,0)*angles(0,1.5707963267948966,-0.17453292519943295-0.6108652381980153*sin((sine+1)*2)),deltaTime) 
         RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.5,0)*angles(0,1.1344640137963142+0.2617993877991494*sin((sine+1)*-2),-1.5707963267948966-0.8726646259971648*sin((sine+1)*2)),deltaTime) 
         AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(0,0,4.5)*angles(1.5707963267948966,31415926535.89793*sin(sine*4.e-10),0),deltaTime) 
         Neck.C0=Neck.C0:Lerp(cf(0,1,-0.25)*angles(-2.2689280275926285+0.17453292519943295*sin((sine+1)*-2),0,2.792526803190927),deltaTime) 
         RootJoint.C0=RootJoint.C0:Lerp(cf(0,5+2*sin(sine*2),0)*angles(-1.3089969389957472+0.17453292519943295*sin((sine+1)*2),-0.08726646259971647,3.490658503988659),deltaTime) 
-        LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1,0)*angles(0,-1.5707963267948966,0.17453292519943295-0.6108652381980153*sin((sine+1)*5)),deltaTime) 
+        LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1,0)*angles(0,-1.5707963267948966,0.17453292519943295-0.6108652381980153*sin((sine+1)*2)),deltaTime) 
         LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.5,0)*angles(0,-2.007128639793479+0.2617993877991494*sin(sine*2),1.5707963267948966+0.8726646259971648*sin((sine+1)*2)),deltaTime) 
         --MW_animatorProgressSave: RightLeg,1,0,0,2,0,0,0,2,-1,0,0,2,90,0,0,2,0,0,0,2,-10,-35,1,2,RightArm,1,0,0,2,0,0,0,2,0.5,0,0,2,65,15,1,-2,0,0,0,2,-90,-50,1,2,NebulaBlade_Handle,0,0,0,2,90,0,0,2,0,0,0,2,0,1800000000000,0,0.0000000004,4.5,0,0,2,0,0,0,2,Head,0,0,0,2,-130,10,1,-2,1,0,0,2,-0,0,0,2,-0.25,0,0,2,160,0,0,2,Torso,0,0,0,2,-75,10,1,2,5,2,0,2,-5,0,0,2,0,0,1,2,200,0,0,2,LeftLeg,-1,0,0,2,-0,0,0,2,-1,0,0,2,-90,0,0,2,0,0,0,2,10,-35,1,2,LeftArm,-1,0,0,2,-0,0,0,2,0.5,0,0,2,-115,15,0,2,0,0,0,2,90,50,1,2
     end,
@@ -1449,7 +1485,7 @@ uis.InputBegan:Connect(function(key, gpe)
     end
 end)
 
-game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[DEMISE GLITCHER]: Demise Glitcher Loaded", "All")
+--game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("[DEMISE GLITCHER]: Demise Glitcher Loaded", "All")
 
 -- when you reset make sure to re-execute this or just make this execute in a loop
 for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
