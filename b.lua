@@ -3,6 +3,8 @@ local tools2 = game:GetService("Players").LocalPlayer.Backpack:GetChildren()
 local firsttoolinbackpack = nil
 local toolinhand = false
 
+local reanimatehatalignsmode = 2
+
 for i,v in pairs(tools1) do
 	if v:IsA("Tool") then
 		toolinhand = true
@@ -695,34 +697,59 @@ local function reanimate()
                     v.Handle.MeshId = "rbxassetid://13404747828"
                 end
             else
-                if v.Handle.TextureID == "https://assetdelivery.roblox.com/v1/asset/?id=13404747828" then
-                    v.Handle.TextureID = "rbxassetid://13404747828"
-                elseif v.Handle.TextureID == "http://www.roblox.com/asset/?id=11263219250" then
-                    v.Handle.TextureID = "rbxassetid://11263219250"
-                end
+				if v.Handle:IsA("MeshPart") then
+					if v.Handle.TextureID == "https://assetdelivery.roblox.com/v1/asset/?id=13404747828" then
+						v.Handle.TextureID = "rbxassetid://13404747828"
+					elseif v.Handle.TextureID == "http://www.roblox.com/asset/?id=11263219250" then
+						v.Handle.TextureID = "rbxassetid://11263219250"
+					end
+				elseif v.Handle:IsA("Part") then
+					mespart = v.Handle:FindFirstChildWhichIsA("MeshPart") or v.Handle:FindFirstChildWhichIsA("SpecialMesh")
+					if mespart.TextureId == "https://assetdelivery.roblox.com/v1/asset/?id=13404747828" then
+						mespart.TextureId = "rbxassetid://13404747828"
+					elseif mespart.TextureId == "http://www.roblox.com/asset/?id=11263219250" then
+						mespart.TextureId = "rbxassetid://11263219250"
+					end
+				end
             end
         end
     end
 
-	local accessorylimbs={
-		{meshid="13421774668",textureid="13415110780",C0=cf_0,Name="Torso"},
-		{meshid="13404747828",textureid="13405498956",C0=angles(rad(0),rad(0),rad(0)),Name="Left Arm"},
-		{meshid="13404747828",textureid="13404747881",C0=angles(rad(0),rad(0),rad(0)),Name="Right Arm"},
-		{meshid="13404747828",textureid="13405479171",C0=angles(rad(0),rad(0),rad(0)),Name="Left Leg"},
-		{meshid="13404747828",textureid="13405499120",C0=angles(rad(0),rad(0),rad(0)),Name="Right Leg"}
-	}
+	local accessorylimbs = {}
 
-	for i=1,#accessorylimbs do
-		local v=accessorylimbs[i]
-		local p=getPart(v.Name)
-		local h=getPartFromMesh(v.meshid,v.textureid)
-		local w=getPartJoint(h)
-		if p and w then
-			w.C0=v.C0
-			w.Part0=h
-			w.C1=cf_0
-			w.Part1=p
+	if reanimatehatalignsmode ~= 3 then
+
+		if reanimatehatalignsmode == 1 then
+			accessorylimbs={
+				{meshid="12483473635",textureid="12483623817",C0=cf_0,Name="Torso"},
+				{meshid="13404747828",textureid="13405498956",C0=angles(rad(0),rad(0),rad(0)),Name="Left Arm"},
+				{meshid="13404747828",textureid="13404747881",C0=angles(rad(0),rad(0),rad(0)),Name="Right Arm"},
+				{meshid="13404747828",textureid="13405479171",C0=angles(rad(0),rad(0),rad(0)),Name="Left Leg"},
+				{meshid="13404747828",textureid="13405499120",C0=angles(rad(0),rad(0),rad(0)),Name="Right Leg"}
+			}
+		elseif reanimatehatalignsmode == 2 then
+			accessorylimbs={
+				{meshid="12483473635",textureid="12483623817",C0=cf_0,Name="Torso"},
+				{meshid="12344207333",textureid="12344207341",C0=angles(rad(120),rad(0),rad(0)),Name="Left Arm"},
+				{meshid="12344206657",textureid="12344206675",C0=angles(rad(120),rad(0),rad(0)),Name="Right Arm"},
+				{meshid="11159370334",textureid="11159284657",C0=angles(rad(0),rad(0),rad(90)),Name="Left Leg"},
+				{meshid="11263221350",textureid="11263219250",C0=angles(rad(0),rad(0),rad(90)),Name="Right Leg"}
+			}
 		end
+
+		for i=1,#accessorylimbs do
+			local v=accessorylimbs[i]
+			local p=getPart(v.Name)
+			local h=getPartFromMesh(v.meshid,v.textureid)
+			local w=getPartJoint(h)
+			if p and w then
+				w.C0=v.C0
+				w.Part0=h
+				w.C1=cf_0
+				w.Part1=p
+			end
+		end
+
 	end
 
     local function speed_power(ws, jp)
@@ -1252,7 +1279,7 @@ local LeftShoulder=getJoint("Left Shoulder")
 local RightHip=getJoint("Right Hip")
 local LeftHip=getJoint("Left Hip")
 local Neck=getJoint("Neck")
-local AccessoryWeld=t.getAccessoryWeld("Nebula Blade")
+local AccessoryWeld=getAccessoryWeld("Nebula Blade")
 
 addmode("default", {
     idle = function()
@@ -1262,13 +1289,13 @@ addmode("default", {
 
         local Cfw, Crt = velchgbycfrvec()
 
-        RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*4),0.5)*angles(0,0,0.08726646259971647+0.08726646259971647*sin((sine-1999998)*4)),deltaTime) 
-        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1.5,0.6+0.1*sin(sine*4),-0.5)*angles(0,0,-0.17453292519943295+0.08726646259971647*sin((sine+1999998)*4)),deltaTime) 
-        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.1+0.15*sin((sine + 0.2)*4),0)*angles(-1.5271630954950384+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
-        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*4),0.5)*angles(0,0,-0.08726646259971647+0.08726646259971647*sin((sine+199999999999998)*4)),deltaTime) 
-        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*4),0.17453292519943295*sin(sine*2),3.141592653589793),deltaTime) 
-        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.5,0.6+0.1*sin(sine*4),-0.5)*angles(0,0,0.17453292519943295+0.08726646259971647*sin((sine-19999998)*-4)),deltaTime) 
-        AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin((sine + 0.5)*2),0.5)*angles(0,0,-0.08726646259971647+0.08726646259971647*sin((sine+999999999999)*2)),deltaTime) 
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*2),0.17453292519943295*sin(sine*1),3.141592653589793),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.6+0.1*sin(sine*2),0)*angles(0,1.3089969389957472,0.17453292519943295+0.08726646259971647*sin(sine*2)),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.6+0.1*sin(sine*2),0)*angles(0,-1.3089969389957472,-0.17453292519943295+0.08726646259971647*sin(sine*2)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin((sine + 0.5)*2),0.5)*angles(0,0,0.08726646259971647+0.08726646259971647*sin(sine*2)),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.1+0.15*sin((sine + 0.2)*2),0)*angles(-1.5271630954950384+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
     end,
     walk = function()
         local Vfw, Vrt = velbycfrvec()
@@ -1278,13 +1305,13 @@ addmode("default", {
         local Cfw, Crt = velchgbycfrvec()
 
         
-        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.5,0.6+0.1*sin(sine*-4),-0.5)*angles(0.7853981633974483*sin(sine*-4),0,0.17453292519943295+0.08726646259971647*sin((sine-19999998)*-4)),deltaTime) 
-        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1.5,0.6+0.1*sin(sine*4),-0.5)*angles(0.7853981633974483*sin(sine*4),0,-0.17453292519943295+0.08726646259971647*sin((sine+1999998)*4)),deltaTime) 
-        AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
-        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*4),0.17453292519943295*sin(sine*2),3.141592653589793),deltaTime) 
-        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*4),0.5)*angles(0.7853981633974483*sin(sine*-4),0,-0.08726646259971647+0.08726646259971647*sin((sine+199999999999998)*4)),deltaTime) 
-        RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*4),0.5)*angles(0.7853981633974483*sin(sine*4),0,0.08726646259971647+0.08726646259971647*sin((sine+999999999)*4)),deltaTime) 
-        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.1+0.15*sin((sine + 0.2)*4),0)*angles(-1.5271630954950384+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.1+0.15*sin((sine + 0.1)*8),0)*angles(-1.5271630954950384+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*-4),0.5-0.25*sin((sine - 0.15) * -4))*angles(0.7853981633974483*sin(sine*-4),0,-0.08726646259971647+0.08726646259971647*sin((sine+99999999999999)*4)),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.6+0.1*sin(sine*4),0)*angles(0.7853981633974483*sin(sine*4),-1.3089969389957472,-0.17453292519943295+0.08726646259971647*sin((sine+999999)*4)),deltaTime) 
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*8),0.17453292519943295*sin(sine*4),3.141592653589793),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.6+0.1*sin(sine*-4),0)*angles(0.7853981633974483*sin(sine*-4),1.3089969389957472,0.17453292519943295+0.08726646259971647*sin((sine-9999999)*4)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*4),0.25-0.25*sin((sine + 0.15)*-4))*angles(0.7853981633974483*sin(sine*4),0,0.08726646259971647+0.08726646259971647*sin((sine+499999999.5)*4)),deltaTime) 
     end,
     jump = function()
         local Vfw, Vrt = velbycfrvec()
@@ -1292,26 +1319,26 @@ addmode("default", {
         local Cfw, Crt = velchgbycfrvec()
 
 
-        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.5,1+0.1*sin(sine*-4),0)*angles(2.356194490192345+0.2617993877991494*sin((sine+67845)*4),0,0.17453292519943295+0.2617993877991494*sin((sine-19999998)*-4)),deltaTime) 
-        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1.5,1+0.1*sin(sine*4),0)*angles(2.356194490192345+0.2617993877991494*sin((sine+1235765)*4),0,-0.17453292519943295+0.2617993877991494*sin((sine+1999998)*4)),deltaTime) 
-        AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
-        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*4),0.17453292519943295*sin(sine*2),3.141592653589793),deltaTime) 
-        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*4),0.5)*angles(0,0,-0.08726646259971647+0.08726646259971647*sin((sine+199999999999998)*4)),deltaTime) 
-        RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*4),0.5)*angles(0,0,0.08726646259971647+0.08726646259971647*sin((sine+999999999)*4)),deltaTime) 
-        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.1,0)*angles(-1.6580627893946132+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.1,0)*angles(-1.6580627893946132+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*2),0.5)*angles(0,0,-0.08726646259971647+0.08726646259971647*sin((sine+199999999999998)*2)),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,1+0.1*sin(sine*2),0)*angles(2.356194490192345+0.2617993877991494*sin((sine+1235765)*2),-1.5707963267948966,-0.17453292519943295+0.2617993877991494*sin((sine-1999998)*-2)),deltaTime) 
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*4),0.17453292519943295*sin(sine*2),3.141592653589793),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,1+0.1*sin(sine*-2),0)*angles(2.356194490192345+0.5235987755982988*sin((sine-1235765)*2),1.5707963267948966,-0.17453292519943295+0.2617993877991494*sin((sine-19999998)*-2)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*2),0.5)*angles(0,0,0.08726646259971647+0.08726646259971647*sin((sine+999999999)*2)),deltaTime) 
         end,
     fall = function()
         local Vfw, Vrt = velbycfrvec()
 
         local Cfw, Crt = velchgbycfrvec()
 
-        RightShoulder.C0=RightShoulder.C0:Lerp(cf(1.5,0.6+0.1*sin(sine*-4),0.5)*angles(3.141592653589793+0.2617993877991494*sin((sine+2930857423908457000)*4),0,0.17453292519943295+0.2617993877991494*sin((sine-19999998)*-4)),deltaTime) 
-        LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1.5,0.6+0.1*sin(sine*4),0.5)*angles(3.141592653589793+0.2617993877991494*sin((sine+4982375098539)*4),0,-0.17453292519943295+0.2617993877991494*sin((sine+1999998)*4)),deltaTime) 
-        AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
-        Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.007128639793479+0.08726646259971647*sin(sine*4),0.17453292519943295*sin(sine*2),3.141592653589793),deltaTime) 
-        LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*4),0.5)*angles(-0.4363323129985824+0.08726646259971647*sin((sine+1908374123125)*4),0,-0.08726646259971647+0.08726646259971647*sin((sine+199999999999998)*4)),deltaTime) 
-        RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*4),0.5)*angles(-0.4363323129985824+0.08726646259971647*sin((sine+12355745)*4),0,0.08726646259971647+0.08726646259971647*sin((sine+999999999)*4)),deltaTime) 
-        RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.25,0)*angles(-1.8325957145940461+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.25,0)*angles(-1.8325957145940461+0.04363323129985824*sin(sine*4),0,3.141592653589793),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-0.5,-1-0.15*sin(sine*2),0.5)*angles(-0.4363323129985824+0.08726646259971647*sin((sine+1908374123125)*2),0,-0.08726646259971647+0.08726646259971647*sin((sine+199999999999998)*2)),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1,0.6+0.1*sin(sine*2),0)*angles(3.141592653589793+0.2617993877991494*sin((sine+4982375098539)*2),-1.3089969389957472,-0.17453292519943295+0.2617993877991494*sin((sine+1999998)*2)),deltaTime) 
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0,0,31415926535.89793*sin(sine*4.e-11)),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.007128639793479+0.08726646259971647*sin(sine*4),0.17453292519943295*sin(sine*2),3.141592653589793),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1,0.6+0.1*sin(sine*-2),0)*angles(3.141592653589793+0.2617993877991494*sin((sine+2930857423908457000)*2),1.3089969389957472,0.17453292519943295+0.2617993877991494*sin((sine-19999998)*-2)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(0.5,-1-0.15*sin(sine*2),0.5)*angles(-0.4363323129985824+0.08726646259971647*sin((sine+12355745)*2),0,0.08726646259971647+0.08726646259971647*sin((sine+999999999)*2)),deltaTime) 
     end
 })
 
@@ -1509,9 +1536,9 @@ end
 
 while true do
     if modee == "Happy" then
-        game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 16
+        game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 18
         game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
-        sp(16,50)
+        sp(18,50)
     elseif modee == "Demise" then
         game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 25
         game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 75
