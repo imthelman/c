@@ -1,3 +1,5 @@
+--(sound.Volume*10/15)*(sound.PlaybackLoudness/150)
+
 local tools1 = game:GetService("Players").LocalPlayer.Character:GetChildren()
 local tools2 = game:GetService("Players").LocalPlayer.Backpack:GetChildren()
 local firsttoolinbackpack = nil
@@ -1466,6 +1468,65 @@ addmode("r", {
     end
 })
 
+addmode("c", {
+    idle = function()
+        local rY, lY = raycastlegs()
+
+        local Cfw, Crt = velchgbycfrvec()
+
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045-0.2*sin(sine*2),-0.8308497667312622)*angles(0.03490658503988659*sin(sine*2),0.03490658503988659*sin(sine*2),125663706143591.73*sin(sine*1.e-13)),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-0.2 * sin(sine*2),-0.5)*angles(0.5235987755982988-0.08726646259971647*sin(sine*2),-1.5707963267948966,0),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,-1.3+0.2*sin(sine*2),0)*angles(-1.9198621771937625,0,3.141592653589793),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.2689280275926285+0.017453292519943295*sin((sine+10)*100),0,2.443460952792061+0.08726646259971647*sin(sine*25)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(1,-1.4-0.2*sin(sine*2),-0.7)*angles(0.2617993877991494+0.08726646259971647*sin(sine*2),1.5707963267948966,-1.5707963267948966),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1+0.15*sin(sine*0.5),0.5-0.2*sin(sine*2),0)*angles(0,-2.705260340591211,-2.007128639793479),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1+0.15*sin(sine*0.5),-0.2-0.2*sin(sine*2),-0.6)*angles(0.17453292519943295,3.0543261909900767,2.443460952792061),deltaTime) 
+    end,
+    walk = function()
+        local Vfw, Vrt = velbycfrvec()
+
+        local rY, lY = raycastlegs()
+
+        local Cfw, Crt = velchgbycfrvec()
+
+        
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045-0.2*sin(sine*2),-0.8308497667312622)*angles(0.03490658503988659*sin(sine*2),0.03490658503988659*sin(sine*2),125663706143591.73*sin(sine*1.e-13)),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1.1+0.2*sin(sine*2),-0.5)*angles(-0.7853981633974483+0.7853981633974483*sin(sine*-2),-1.5707963267948966,0),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0.2 * sin(sine*4),0)*angles(-1.9198621771937625,0,3.141592653589793),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.2689280275926285+0.017453292519943295*sin((sine+10)*100),0,2.443460952792061+0.08726646259971647*sin(sine*25)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(1,-1.1+0.2*sin(sine*-2),-0.7)*angles(0.7853981633974483+0.7853981633974483*sin(sine*2),1.5707963267948966,-1.5707963267948966),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1+0.15*sin(sine*0.5),0.5-0.2*sin(sine*2),0)*angles(0,-2.705260340591211,-2.007128639793479),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1+0.15*sin(sine*0.5),-0.2-0.2*sin(sine*2),-0.6)*angles(0.17453292519943295,3.0543261909900767,2.443460952792061),deltaTime) 
+    end,
+    jump = function()
+        local Vfw, Vrt = velbycfrvec()
+
+        local Cfw, Crt = velchgbycfrvec()
+
+
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0.03490658503988659*sin(sine*2),0.03490658503988659*sin(sine*2),125663706143591.73*sin(sine*1.e-13)),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1.5,-0.5)*angles(-1.5707963267948966+0.08726646259971647*sin(sine*-2),-1.5707963267948966,0),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0,0)*angles(-1.9198621771937625,0,3.141592653589793),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.2689280275926285+0.017453292519943295*sin((sine+10)*100),0,2.443460952792061+0.08726646259971647*sin(sine*25)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(1,-1.5,-0.7)*angles(0.08726646259971647*sin(sine*2),2.007128639793479,-1.5707963267948966),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1+0.15*sin(sine*0.5),0.5,0)*angles(0,-2.705260340591211,-2.007128639793479),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1+0.15*sin(sine*0.5),-0.2,-0.6)*angles(0.17453292519943295,3.0543261909900767,2.443460952792061),deltaTime) 
+        end,
+    fall = function()
+        local Vfw, Vrt = velbycfrvec()
+
+        local Cfw, Crt = velchgbycfrvec()
+
+		AccessoryWeld.C0=AccessoryWeld.C0:Lerp(cf(-0.01117706298828125,-0.05389392375946045,-0.8308497667312622)*angles(0.03490658503988659*sin(sine*2),0.03490658503988659*sin(sine*2),125663706143591.73*sin(sine*1.e-13)),deltaTime) 
+		LeftHip.C0=LeftHip.C0:Lerp(cf(-1,-1.5,-0.5)*angles(-1.9198621771937625+0.08726646259971647*sin(sine*-2),-1.5707963267948966,0),deltaTime) 
+		RootJoint.C0=RootJoint.C0:Lerp(cf(0,0,0)*angles(-1.9198621771937625,0,3.141592653589793),deltaTime) 
+		Neck.C0=Neck.C0:Lerp(cf(0,1,0)*angles(-2.2689280275926285+0.017453292519943295*sin((sine+10)*100),0,2.443460952792061+0.08726646259971647*sin(sine*25)),deltaTime) 
+		RightHip.C0=RightHip.C0:Lerp(cf(1,-1.5,-0.7)*angles(-0.3490658503988659+0.08726646259971647*sin(sine*2),1.5707963267948966,-1.5707963267948966),deltaTime) 
+		LeftShoulder.C0=LeftShoulder.C0:Lerp(cf(-1+0.15*sin(sine*0.5),0.5,0)*angles(0,-2.705260340591211,-2.007128639793479),deltaTime) 
+		RightShoulder.C0=RightShoulder.C0:Lerp(cf(1+0.15*sin(sine*0.5),-0.2,-0.6)*angles(0.17453292519943295,3.0543261909900767,2.443460952792061),deltaTime) 
+    end
+})
+
 local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 
@@ -1486,7 +1547,7 @@ uis.InputBegan:Connect(function(key, gpe)
     elseif k == Enum.KeyCode.G then
         modee = "Glitched" --standing
     elseif k == Enum.KeyCode.T then
-        modee = "Chaos" --standing
+        modee = "C R A Z Y" --standing
     elseif k == Enum.KeyCode.Y then
         modee = "Depressed" --flying
     elseif k == Enum.KeyCode.U then
@@ -1594,7 +1655,7 @@ while true do
     elseif modee == "ANGER" then
         game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 30
         game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
-        sp(30,50)
+        sp(6.5,50)
     elseif modee == "SUPERNOVA" then
         game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = 65
         game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = 50
